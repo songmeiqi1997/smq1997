@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.jiyun.ssm.mapper.EmpMapper">
+    <resultMap id="find" type="emp">
+        <id column="eid" property="eid"></id>
+        <result column="ename" property="ename"></result>
+        <result column="age" property="age"></result>
+        <result column="photo" property="photo"></result>
+        <result column="birthday" property="birthday"></result>
+        <result column="did" property="did"></result>
+<association property="dept" javaType="dept">
+    <id column="did" property="did"></id>
+    <result column="dname" property="dname"></result>
+</association>
+    </resultMap>
+    <insert id="addEmp" parameterType="emp">
+  insert into emp values
+        (null,#{emp.ename},#{emp.age},#{emp.photo},#{emp.birthday},#{emp.did})
+    </insert>
+
+    <select id="findAll" resultMap="find">
+        select * from emp
+    </select>
+    <delete id="delete" parameterType="int">
+        delete from emp where eid=#{eid}
+    </delete>
+
+<select id="findById" parameterType="int" resultType="emp">
+    select * from emp where eid=#{eid}
+</select>
+
+    <update id="update" parameterType="emp">
+        update emp set ename=#{emp.ename},age=#{emp.age},photo=#{emp.photo},birthday=#{emp.birthday},did=#{emp.did}
+        where eid=#{emp.eid}
+    </update>
+</mapper>
